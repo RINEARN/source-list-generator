@@ -5,7 +5,7 @@ coding UTF-8;
  * VCSSL Script for generating/updating "sourcelist.txt"
  * ------------------------------------------------------------
  * This file is released under CC0.
- * Written in 2018 by RINEARN (Fumihiro Matsui)
+ * Written in 2018-2019 by RINEARN (Fumihiro Matsui)
  * ============================================================
  */
 
@@ -13,14 +13,17 @@ import File;
 import Text;
 
 
-/** テストコードをコンパイル対象に含めるかどうかを制御する変数です。 */
+/** テストコードをコンパイル対象に含めるかどうかを指定する変数です。 */
 const bool CONTAINS_TESTS = false; // true なら含める
 
-/** コンパイル対象ファイルが含まれるフォルダのルート階層のパスです。 */
+/** コンパイル対象ファイルが含まれるフォルダ（ソースフォルダ）のルート階層のパスです。 */
 const string SOURCE_DIRECTORY_PATH = ".";
 
 /** コンパイル対象ファイルを書き出す、出力ファイルのパスです。 */
 const string OUTPUT_FILE_PATH = "./sourcelist.txt";
+
+/** 出力内容において、パス先頭の「 ./ 」を削除するかどうかを指定する変数です。 */
+const boolean REMOVES_DOTSLASH = true; // true なら削除する
 
 /** SOURCE_DIRECTORY_PATH 指定フォルダ内で、コンパイル対象から除外するサブフォルダのパスです。 */
 const string EXCEPT_DIRECTORY_PATHS[] = { "./META-INF", "./example", "./dev" };
@@ -72,6 +75,11 @@ void processDirectory(string dirPath, int listOutputFile) {
 		
 		// パス区切り文字が「 \ 」の場合は「 / 」に置き換える
 		filePath = replaceText(filePath, "\\", "/", ALL);
+		
+		// 先頭の ./ を削除するよう指定されている場合は、削除する
+		if (REMOVES_DOTSLASH && checkText(filePath, "./", START)) {
+			filePath = cropText(filePath, 2, countText(filePath));
+		}
 		
 		// 拡張子の確認
 		if (checkText(fileName, ".java", END)) {
