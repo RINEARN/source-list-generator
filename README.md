@@ -1,6 +1,6 @@
 # SourceListGenerator
 
-A VCSSL script for generating list file for compiling multiple Java&reg; source files, packages, and so on - 複数のJava&reg;ソースファイルやパッケージ等をコンパイルする際のリストファイルを生成するVCSSLスクリプト
+A VCSSL script for generating a list file for compiling multiple Java&reg; source files, packages, and so on - 複数のJava&reg;ソースファイルやパッケージ等をコンパイルする際のリストファイルを生成するVCSSLスクリプト
 
 ## Abstract - 概要
 
