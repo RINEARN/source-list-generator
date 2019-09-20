@@ -81,7 +81,7 @@ void processDirectory(string dirPath, int listOutputFileID) {
 	
 	// Print the current processing directory.
 	// 現在の処理対象フォルダを画面に追記
-	println("Traverse dir: " + dirPath);
+	println("Go to: " + dirPath);
 	
 	// Get and store the number of files and filenames in the current processing directory.
 	// フォルダ内の全ファイル名の一覧とファイル数を取得
@@ -120,6 +120,7 @@ void processDirectory(string dirPath, int listOutputFileID) {
 			// 除外リストに含まれてないフォルダなら、再帰で中を辿る
 			if (!isExceptDir) {
 				processDirectory(filePath, listOutputFileID);
+				println("Return to: " + dirPath);
 			}
 			
 		// If the current processing file is not a directory:
