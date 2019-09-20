@@ -17,9 +17,9 @@ This repository provides/manages a script "SourceListGenerator.vcssl" which can 
 
 ## License - ライセンス
 
-This script is released under CC0.
+This script is released under [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed).
 
-このスクリプトは CC0 で公開されています。
+このスクリプトは [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.ja) で公開されています。
 
 
 ## Requirements - 必要なもの
