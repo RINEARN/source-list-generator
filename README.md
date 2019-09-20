@@ -10,10 +10,10 @@ When you want to compile multiple java source files or packages whithout build-t
 
     javac @sourcelist.txt
 
-This repository provides/manages a script "SourceListGenerator.vcssl" which can generate the above list file (sourcelist.txt) automatically. This script is practically used in other repositories of RINEARN ( e.g. : <a href="https://github.com/RINEARN/vnano">Vnano</a> ).
+This repository provides/manages a script "SourceListGenerator.vcssl" which can generate the above list file (sourcelist.txt) automatically. This script is practically used in other repositories of RINEARN ( e.g. : <a href="https://github.com/RINEARN/vnano/tree/master/src">&quot;src&quot; directory of the Vnano</a> ).
 
 このリポジトリは、上記のリストファイル（sourcelist.txt）を自動生成するスクリプト「 SourceListGenerator.vcssl 」を提供/管理します。
-このスクリプトは、RINEARNの他のリポジトリ（ <a href="https://github.com/RINEARN/vnano">Vnano</a> など ）において実際に使用しています。
+このスクリプトは、RINEARNの他のリポジトリ内（ 例： <a href="https://github.com/RINEARN/vnano/tree/master/src">Vnanoの「src」フォルダ</a> など ）において実際に使用しています。
 
 ## License - ライセンス
 
