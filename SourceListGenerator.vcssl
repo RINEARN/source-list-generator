@@ -138,6 +138,10 @@ void processDirectory(string dirPath, int listOutputFileID) {
 //   The name of the file to be processed.
 //   処理対称ファイルの名称。
 // 
+// filePath:
+//   The path of the file to be processed.
+//   処理対称ファイルの名称。
+// 
 // listOutputFileID:
 //    The ID of the output file.
 //    出力ファイルのID。
