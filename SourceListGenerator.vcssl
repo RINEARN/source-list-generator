@@ -25,6 +25,9 @@ const string OUTPUT_FILE_PATH = "./sourcelist.txt";
 /** 出力内容において、パス先頭の「 ./ 」を削除するかどうかを指定する変数です。 */
 const boolean REMOVES_DOTSLASH = true; // true なら削除する
 
+/** 出力内容において、ソースファイルのパスの先頭に付加する文字列です。 */
+const string OUTPUT_PREFIX = "";
+
 /** SOURCE_DIRECTORY_PATH 指定フォルダ内で、コンパイル対象から除外するサブフォルダのパスです。 */
 const string EXCEPT_DIRECTORY_PATHS[] = { "./META-INF", "./example", "./dev" };
 
@@ -60,7 +63,7 @@ void main() {
 void processDirectory(string dirPath, int listOutputFile) {
 	
 	// 現在の処理対象フォルダを画面に追記
-	println("Directory: " + dirPath);
+	println("Traverse dir: " + dirPath);
 	
 	// フォルダ内の全ファイル名の一覧とファイル数を取得
 	string fileNames[] = listdir(dirPath);
@@ -86,11 +89,14 @@ void processDirectory(string dirPath, int listOutputFile) {
 			// テストを含めない場合は、ファイル名部分がTestで終わるものは省く
 			if (CONTAINS_TESTS || !checkText(fileName, "Test.java", END)) {
 				
+				// 出力時のプレフィックス文字列を付加
+				string outputLine = OUTPUT_PREFIX + filePath;
+				
 				// 対象ファイルのパスを出力ファイルに書き出す
-				writeln(listOutputFile, filePath);
+				writeln(listOutputFile, outputLine);
 				
 				// 書き出したファイルのパスを画面に追記
-				println("  " + filePath);
+				println("    Add to the list: " + outputLine);
 			}
 		}
 		
