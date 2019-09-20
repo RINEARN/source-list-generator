@@ -13,9 +13,6 @@ import File;
 import Text;
 
 
-/** テストコードをコンパイル対象に含めるかどうかを指定する変数です。 */
-const bool CONTAINS_TESTS = false; // true なら含める
-
 /** コンパイル対象ファイルが含まれるフォルダ（ソースフォルダ）のルート階層のパスです。 */
 const string SOURCE_DIRECTORY_PATH = ".";
 
@@ -28,8 +25,14 @@ const boolean REMOVES_DOTSLASH = true; // true なら削除する
 /** 出力内容において、ソースファイルのパスの先頭に付加する文字列です。 */
 const string OUTPUT_PREFIX = "";
 
-/** SOURCE_DIRECTORY_PATH 指定フォルダ内で、コンパイル対象から除外するサブフォルダのパスです。 */
-const string EXCEPT_DIRECTORY_PATHS[] = { "./META-INF", "./example", "./dev" };
+/** コンパイル対象ファイルの拡張子を指定します。 */
+const string FILENAME_EXTENSIONS[] = { ".java" };
+
+/** SOURCE_DIRECTORY_PATH 指定フォルダ内で、コンパイル対象から除外したいサブフォルダのパスを指定します。 */
+const string EXCLUDED_DIRECTORY_PATHS[] = { "./META-INF", "./example", "./dev" };
+
+/** コンパイル対象から除外したいファイルにおける、ファイル名の正規表現を指定します。 */
+const string EXCLUDED_FILENAME_REGEX[] = { ".*Test.java" };
 
 
 /**
@@ -58,7 +61,7 @@ void main() {
  * その相対ファイルパスを出力ファイルに書き出します。
  * 
  * @param dirPath 基準フォルダ
- * @listOutputFile ファイルパスを書き出す出力ファイルのID
+ * @param listOutputFile ファイルパスを書き出す出力ファイルのID
  */
 void processDirectory(string dirPath, int listOutputFile) {
 	
@@ -79,35 +82,14 @@ void processDirectory(string dirPath, int listOutputFile) {
 		// パス区切り文字が「 \ 」の場合は「 / 」に置き換える
 		filePath = replaceText(filePath, "\\", "/", ALL);
 		
-		// 先頭の ./ を削除するよう指定されている場合は、削除する
-		if (REMOVES_DOTSLASH && checkText(filePath, "./", START)) {
-			filePath = cropText(filePath, 2, countText(filePath));
-		}
-		
-		// 拡張子の確認
-		if (checkText(fileName, ".java", END)) {
-			// テストを含めない場合は、ファイル名部分がTestで終わるものは省く
-			if (CONTAINS_TESTS || !checkText(fileName, "Test.java", END)) {
-				
-				// 出力時のプレフィックス文字列を付加
-				string outputLine = OUTPUT_PREFIX + filePath;
-				
-				// 対象ファイルのパスを出力ファイルに書き出す
-				writeln(listOutputFile, outputLine);
-				
-				// 書き出したファイルのパスを画面に追記
-				println("    Add to the list: " + outputLine);
-			}
-		}
-		
 		// フォルダの場合
 		if (isdir(filePath)) {
 			
 			// 除外リストに含まれているフォルダかどうか確認
 			bool isExceptDir = false;
-			int exceptDirN = length(EXCEPT_DIRECTORY_PATHS);
+			int exceptDirN = length(EXCLUDED_DIRECTORY_PATHS);
 			for (int exceptDirIndex=0; exceptDirIndex<exceptDirN; exceptDirIndex++) {
-				if (EXCEPT_DIRECTORY_PATHS[exceptDirIndex] == filePath) {
+				if (EXCLUDED_DIRECTORY_PATHS[exceptDirIndex] == filePath) {
 					isExceptDir = true;
 					break;
 				}
@@ -117,7 +99,52 @@ void processDirectory(string dirPath, int listOutputFile) {
 			if (!isExceptDir) {
 				processDirectory(filePath, listOutputFile);
 			}
+			
+		// ファイルの場合
+		} else {
+			processFile(fileName, filePath, listOutputFile);
 		}
 	}
+}
+
+
+/**
+ * 指定されたファイルに対して、書き出し対象か判定した上で、パスを書き出します。
+ * 
+ * @param fileName 対称ファイルの名称
+ * @param filePath 対称ファイルのパス
+ * @param listOutputFile ファイルパスを書き出す出力ファイルのID
+ */
+void processFile(string fileName, string filePath, int listOutputFile) {
+	
+	// 先頭の ./ を削除するよう指定されている場合は、削除する
+	if (REMOVES_DOTSLASH && checkText(filePath, "./", START)) {
+		filePath = cropText(filePath, 2, countText(filePath));
+	}
+	
+	// ファイルの拡張子が対象と一致しない場合は、書き出さずに終了
+	int extensionN = length(FILENAME_EXTENSIONS);
+	for (int i=0; i<extensionN; i++) {
+		if (!checkText(fileName, FILENAME_EXTENSIONS[i], END)) {
+			return;
+		}
+	}
+	
+	// ファイル名が除外指定の正規表現とパターン合致する場合は、書き出さずに終了
+	int exceptRegexN = length(EXCLUDED_FILENAME_REGEX);
+	for (int i=0; i<exceptRegexN; i++) {
+		if (checkText(fileName, EXCLUDED_FILENAME_REGEX[i], FULL_PATTERN)) {
+			return;
+		}
+	}
+	
+	// 出力時のプレフィックス文字列を付加
+	string outputLine = OUTPUT_PREFIX + filePath;
+	
+	// 対象ファイルのパスを出力ファイルに書き出す
+	writeln(listOutputFile, outputLine);
+	
+	// 書き出したファイルのパスを画面に追記
+	println("    Add to the list: " + outputLine);
 }
 
