@@ -1,8 +1,8 @@
 # SourceListGenerator.vcssl
 
-A script for generating a list file of the Java&reg; source files, useful when you compile them by "javac" command.
+A script for generating a list file of Java&reg; source files, useful when you compile them by "javac" command.
 
-This script is written in the VCSSL. You can get the runtime environment of the VCSSL from: [https://www.vcssl.org/en-us/](https://www.vcssl.org/en-us/)
+This script is written in the VCSSL. You can get the runtime environment from: [https://www.vcssl.org/en-us/](https://www.vcssl.org/en-us/)
 
 ## About a "List Files" and This Tool
 
@@ -18,11 +18,6 @@ where an example of the content of "sourcefile.txt" is:
     ...
 
 This script generates "list files" likes the above automatically.
-
-## Requirements
-
-- Java
-- [VCSSL Runtime](https://www.vcssl/org/)
 
 
 ## How to Use
