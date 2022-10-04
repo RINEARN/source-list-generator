@@ -6,18 +6,18 @@ This script is written in the VCSSL. You can get the runtime environment from: [
 
 ## About a "List Files" and This Tool
 
-When you compile multiple java source files by using "javac" command (whithout using build-tools or IDEs), you may describe pathes of all source files in a file (e.g. sourcelist.txt), and you can specify it as follows:
+When you compile multiple java source files by using "javac" command (whithout using build-tools or IDEs), you may describe pathes of all source files in a file (e.g. spurcelist.txt), and you can specify it as follows:
 
-    javac @sourcelist.txt
+    javac @spurcelist.txt
 
-where an example of the content of "sourcefile.txt" is:
+where an example of the content of "spurcelist.txt" is:
 
     my/package/MyClass1.java
     my/package/MyClass2.java
     my/package/MyClass3.java
     ...
 
-This script generates "list files" likes the above automatically.
+This script generates a list file like the above "spurcelist.txt", automatically.
 
 
 ## How to Use
